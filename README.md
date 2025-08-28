@@ -66,9 +66,9 @@ Markdown är ett lätt sätt att skriva text som blir snygg på webben. Man anv�
 
 ### Bilder
 ```
-![Beskrivning](X_stamma.png)
+![Beskrivning](stamma.png)
 ```
-![Beskrivning](X_stamma.png)
+![Beskrivning](stamma.png)
 
 ### Citat
 ```
