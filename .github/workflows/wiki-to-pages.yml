@@ -57,6 +57,11 @@ jobs:
             echo "" >> docs/index.md
             echo "Denna sajt speglar klubbens GitHub-wiki." >> docs/index.md
           fi
+      - name: Använd Home.md som index om index saknas
+        run: |
+          if [ -f docs/Home.md ] && [ ! -f docs/index.md ]; then
+            mv docs/Home.md docs/index.md
+          fi
 
       - name: Bygg sajten (validera lokalt)
         run: mkdocs build --strict
