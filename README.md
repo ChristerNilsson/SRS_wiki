@@ -30,11 +30,13 @@ Markdown är ett lätt sätt att skriva text som blir snygg på webben. Man anv�
 
 ### Fet och kursiv stil
 ```
-**fet text**  
 *kursiv text*  
+**fet text**  
+***fet och kursiv text***  
 ```
-**fet text**  
 *kursiv text*  
+**fet text**  
+***fet och kursiv text***  
 
 ### Listor
 ```
