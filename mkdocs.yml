@@ -1,12 +1,10 @@
-site_name: Seniorschack Stockholm
+site_name: ""
 site_description: Dokumentation, analyser och handböcker
 site_url: https://ChristerNilsson.github.io/SRS_wiki
-repo_url: https://github.com/ChristerNilsson/SRS_wiki
+repo_url: ""
 theme:
   name: material
   features:
-    - navigation.tabs
-    - navigation.top
     - content.code.copy
 markdown_extensions:
   - admonition
