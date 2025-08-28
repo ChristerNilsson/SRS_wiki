@@ -1,0 +1,67 @@
+name: Wiki to Pages
+
+on:
+  gollum: {}            # Triggas när wiki-sidor skapas/ändras
+  workflow_dispatch: {} # Manuell körning vid behov
+
+permissions:
+  contents: write       # Behövs för att pusha till gh-pages
+  pages: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo (för mkdocs.yml + CI)
+        uses: actions/checkout@v4
+
+      - name: Installera Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Installera MkDocs + Material
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material
+
+      - name: Hämta wiki-innehåll
+        env:
+          REPO: ${{ github.repository }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          rm -rf wiki docs
+          mkdir -p wiki docs
+          # Klona wiki-repot som hör till samma repo
+          git clone "https://x-access-token:${TOKEN}@github.com/${REPO}.wiki.git" wiki
+
+          # Om wikin är tom: skapa en enkel startsida
+          if [ ! "$(ls -A wiki)" ]; then
+            echo "# Välkommen" > wiki/index.md
+            echo "Den här sidan speglar GitHub-wikin." >> wiki/index.md
+          fi
+
+          # Filtrera bort specialfiler som inte ska in i sajten
+          # (GitHub-wiki kan ha _Sidebar.md, _Footer.md, _Header.md)
+          shopt -s extglob
+          rsync -av --delete \
+            --exclude '_Sidebar.md' \
+            --exclude '_Footer.md' \
+            --exclude '_Header.md' \
+            wiki/ docs/
+
+          # Om ingen index.md finns, skapa en sådan som listar sidor
+          if [ ! -f docs/index.md ]; then
+            echo "# Innehåll" > docs/index.md
+            echo "" >> docs/index.md
+            echo "Denna sajt speglar klubbens GitHub-wiki." >> docs/index.md
+          fi
+
+      - name: Bygg sajten (validera lokalt)
+        run: mkdocs build --strict
+
+      - name: Deploy till gh-pages
+        run: mkdocs gh-deploy --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

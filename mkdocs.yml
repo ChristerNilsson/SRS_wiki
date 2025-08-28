@@ -1,0 +1,19 @@
+site_name: Seniorschack Stockhoml
+site_description: Dokumentation, analyser och handböcker
+site_url: https://ChristerNilsson.github.io/SRS_wiki
+repo_url: https://github.com/ChristerNilsson/SRS_wiki
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.top
+    - content.code.copy
+markdown_extensions:
+  - admonition
+  - attr_list
+  - toc:
+      permalink: true
+nav:
+  - Hem: index.md
+# OBS: Navigeringen kan även genereras automatiskt; lämna nav borttagen om du vill att MkDocs
+# listar sidorna efter filstruktur. (Se tips längre ned.)
