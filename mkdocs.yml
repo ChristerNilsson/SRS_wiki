@@ -15,5 +15,8 @@ markdown_extensions:
       permalink: true
 nav:
   - Hem: index.md
+plugins:
+  - search
+  - ezlinks
 # OBS: Navigeringen kan även genereras automatiskt; lämna nav borttagen om du vill att MkDocs
 # listar sidorna efter filstruktur. (Se tips längre ned.)
